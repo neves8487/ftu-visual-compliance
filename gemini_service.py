@@ -3,23 +3,14 @@ Serviço de Integração com Google Gemini Multimodal
 Responsável pela comunicação com a Google GenAI SDK.
 """
 
+from pathlib import Path
+
 from PIL import Image
 from google import genai
 
-# Regras e critérios de avaliação definidos diretamente no prompt
-PROMPT_AVALIACAO = """
-Age como um treinador.
-Analisa a imagem fornecida de acordo com as seguintes regras e parâmetros:
-
-1. Qualidade Técnica: Foco, nitidez, iluminação e ausência de borrões ou ruído.
-2. Composição e Enquadramento: Centralização e destaque dos elementos principais.
-3. Conformidade Visual: Identifica anomalias, defeitos ou elementos impróprios.
-
-Para cada parâmetro:
-- Atribui uma pontuação de 0 a 10.
-- Fornece uma breve justificativa objetiva.
-- Conclui com um Veredito Final: [APROVADO], [REPROVADO] ou [REQUER REVISÃO].
-"""
+# Carrega o prompt de avaliação a partir do ficheiro de texto
+_PROMPT_PATH = Path(__file__).resolve().parent / "prompt_avaliacao.txt"
+PROMPT_AVALIACAO = _PROMPT_PATH.read_text(encoding="utf-8")
 
 
 def avaliar_imagem(api_key: str, modelo: str, imagem: Image.Image) -> str:
@@ -45,3 +36,4 @@ def avaliar_imagem(api_key: str, modelo: str, imagem: Image.Image) -> str:
     )
 
     return resposta.text
+

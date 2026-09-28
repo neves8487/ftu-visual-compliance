@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 # Garante que imports locais funcionem sem erro
 sys.path.append(str(Path(__file__).resolve().parent))
 
-# Importação do serviço de IA (as regras estão fixas dentro do gemini_service.py)
+# Importação do serviço de IA
 from gemini_service import avaliar_imagem
 
 # Carrega variáveis do arquivo .env, se existir
@@ -20,32 +20,37 @@ load_dotenv()
 st.set_page_config(
     page_title="Avaliação de Imagens - Gemini",
     page_icon="🔍",
-    layout="centered"
+    layout="wide"
 )
 
 st.title("🔍 Avaliador de Imagens com Google Gemini")
-st.markdown("Carregue uma imagem para avaliação visual automática.")
+st.markdown("Carregue uma ou mais imagens para avaliação visual automática.")
 
 # ==============================================================================
 # Barra Lateral: Configurações
 # ==============================================================================
 with st.sidebar:
     st.header("⚙️ Configurações")
-    
-    # Se a chave já existir no servidor (Streamlit Secrets ou .env), usa-a diretamente
-    chave_servidor = st.secrets.get("GEMINI_API_KEY", os.getenv("GEMINI_API_KEY", ""))
-    
+
+    # Verifica se a chave existe no ambiente (.env) ou no Streamlit Secrets (na cloud)
+    chave_servidor = os.getenv("GEMINI_API_KEY", "")
+    if not chave_servidor:
+        try:
+            if "GEMINI_API_KEY" in st.secrets:
+                chave_servidor = st.secrets["GEMINI_API_KEY"]
+        except Exception:
+            chave_servidor = ""
+
     if chave_servidor:
         api_key = chave_servidor
         st.success("🟢 API Conectada")
     else:
-        # Só exibe o campo se o servidor não tiver a chave configurada
         api_key = st.text_input(
             "GEMINI_API_KEY",
             type="password",
             help="Insira a sua chave de API do Google Gemini."
         )
-    
+
     modelo = st.selectbox(
         "Modelo Multimodal",
         options=["gemini-2.5-flash", "gemini-3.5-flash", "gemini-3.5-flash-lite", "gemini-3.6-flash", "gemini-3.7-flash"],
@@ -53,51 +58,71 @@ with st.sidebar:
     )
 
 # ==============================================================================
-# Upload da Imagem
+# Upload de Imagens (múltiplas)
 # ==============================================================================
-ficheiro_imagem = st.file_uploader(
-    "Selecione uma imagem (.jpg, .jpeg, .png)",
-    type=["jpg", "jpeg", "png"]
+ficheiros_imagem = st.file_uploader(
+    "Selecione uma ou mais imagens (.jpg, .jpeg, .png)",
+    type=["jpg", "jpeg", "png"],
+    accept_multiple_files=True
 )
 
-imagem_carregada = None
-if ficheiro_imagem is not None:
-    try:
-        imagem_carregada = Image.open(ficheiro_imagem)
-        st.image(imagem_carregada, caption=f"Imagem: {ficheiro_imagem.name}", use_container_width=True)
-    except Exception as e:
-        st.error(f"Erro ao abrir a imagem: {e}")
+# Carrega e mostra as imagens em grelha
+imagens: list[tuple[str, Image.Image]] = []
+if ficheiros_imagem:
+    colunas = st.columns(min(len(ficheiros_imagem), 4))
+    for i, ficheiro in enumerate(ficheiros_imagem):
+        try:
+            img = Image.open(ficheiro)
+            imagens.append((ficheiro.name, img))
+            with colunas[i % len(colunas)]:
+                st.image(img, caption=ficheiro.name, use_container_width=True)
+        except Exception as e:
+            st.error(f"Erro ao abrir '{ficheiro.name}': {e}")
 
 botao_avaliar = st.button(
-    "🚀 Avaliar Imagem",
+    f"🚀 Avaliar {'Imagens' if len(imagens) != 1 else 'Imagem'} ({len(imagens)})",
     type="primary",
     use_container_width=True,
-    disabled=(imagem_carregada is None)
+    disabled=(len(imagens) == 0)
 )
 
 # ==============================================================================
-# Chamada à IA e Apresentação do Resultado
+# Chamada à IA e Apresentação dos Resultados
 # ==============================================================================
+if "resultados" not in st.session_state:
+    st.session_state["resultados"] = {}
+
 if botao_avaliar:
     if not api_key.strip():
         st.error("Por favor, introduza a sua GEMINI_API_KEY na barra lateral.")
-    elif imagem_carregada is None:
-        st.warning("Carregue uma imagem antes de avaliar.")
+    elif not imagens:
+        st.warning("Carregue pelo menos uma imagem antes de avaliar.")
     else:
-        with st.spinner(f"A avaliar a imagem com o modelo {modelo}..."):
+        barra_progresso = st.progress(0, text="A iniciar avaliação...")
+        total = len(imagens)
+
+        for idx, (nome, img) in enumerate(imagens):
+            barra_progresso.progress(
+                (idx) / total,
+                text=f"A avaliar {nome} ({idx + 1}/{total})..."
+            )
             try:
-                # Chama a IA diretamente (as regras estão fixas no gemini_service)
                 resultado = avaliar_imagem(
                     api_key=api_key.strip(),
                     modelo=modelo,
-                    imagem=imagem_carregada
+                    imagem=img
                 )
-                st.session_state["resultado_gemini"] = resultado
+                st.session_state["resultados"][nome] = resultado
             except Exception as e:
-                st.error(f"Erro na avaliação da imagem: {e}")
+                st.session_state["resultados"][nome] = f"❌ Erro: {e}"
 
-# Exibe o resultado se já existir na sessão
-if "resultado_gemini" in st.session_state:
+        barra_progresso.progress(1.0, text="Avaliação concluída!")
+
+# Exibe os resultados se existirem
+if st.session_state.get("resultados"):
     st.markdown("---")
-    st.subheader("📋 Relatório de Avaliação")
-    st.markdown(st.session_state["resultado_gemini"])
+    st.subheader("📋 Relatórios de Avaliação")
+
+    for nome, resultado in st.session_state["resultados"].items():
+        with st.expander(f"📄 {nome}", expanded=True):
+            st.markdown(resultado)
