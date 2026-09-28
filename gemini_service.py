@@ -43,12 +43,15 @@ def avaliar_imagem(api_key: str, modelo: str, imagem: Image.Image) -> str:
 
     client = genai.Client(api_key=api_key.strip())
 
-     # Redimensiona para 1080p para acelerar upload e inferência
+    # Redimensiona para 1080p para acelerar upload e inferência
     imagem_otimizada = redimensionar_imagem(imagem, max_dim=1080)
+
+    # Lê sempre a versão mais recente do ficheiro de prompt
+    prompt_atual = _PROMPT_PATH.read_text(encoding="utf-8")
 
     resposta = client.models.generate_content(
         model=modelo,
-        contents=[imagem, PROMPT_AVALIACAO]
+        contents=[imagem_otimizada, prompt_atual]
     )
 
     return resposta.text
