@@ -53,7 +53,7 @@ with st.sidebar:
 
     modelo = st.selectbox(
         "Modelo Multimodal",
-        options=["gemini-2.5-flash", "gemini-3.5-flash", "gemini-3.5-flash-lite", "gemini-3.6-flash", "gemini-3.7-flash"],
+        options=["gemini-3.8-flash", "gemini-3.7-flash", "gemini-3.6-flash", "gemini-3.5-flash", "gemini-3.5-flash-lite"],
         index=0
     )
 
@@ -66,16 +66,16 @@ ficheiros_imagem = st.file_uploader(
     accept_multiple_files=True
 )
 
-# Carrega e mostra as imagens em grelha
+# Carrega e mostra as imagens em grelha (thumbnails)
 imagens: list[tuple[str, Image.Image]] = []
 if ficheiros_imagem:
-    colunas = st.columns(min(len(ficheiros_imagem), 4))
+    colunas = st.columns(min(len(ficheiros_imagem), 4) if len(ficheiros_imagem) >= 4 else 4)
     for i, ficheiro in enumerate(ficheiros_imagem):
         try:
             img = Image.open(ficheiro)
             imagens.append((ficheiro.name, img))
             with colunas[i % len(colunas)]:
-                st.image(img, caption=ficheiro.name, use_container_width=True)
+                st.image(img, caption=ficheiro.name, width=150)
         except Exception as e:
             st.error(f"Erro ao abrir '{ficheiro.name}': {e}")
 
