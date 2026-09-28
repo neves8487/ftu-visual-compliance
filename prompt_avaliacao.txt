@@ -7,14 +7,14 @@ EVALUATION STRATEGY FOR SPACE & SCREWS:
      • FTU area: top box where the FTU is mounted.
      • Prohibited NT reserved zone: zone directly below the FTU (the middle card/box with text and QR code, extending ~125 mm below FTU base). Strictly NO cable clips/screws allowed inside this box.
      • Allowed cable securing area: The bottom area below the NT card/QR code (near the bottom edge/logo). Cable clips and screws placed here to secure the fiber cable are FULLY COMPLIANT (OK).
-     • Installation boundary (350 x 140 mm): must remain free of rigid, bulky obstacles (pipes, walls, fuse boxes). NOTE: Thin existing cables or wires running flat against the wall along the outer side margins of the template do NOT obstruct the NT mounting space and are COMPLIANT (OK).
+     • Installation boundary (350 x 140 mm): must remain free of rigid, bulky obstacles. NOTE: Thin existing cables or wires running flat against the wall along the outer side margins of the template do NOT obstruct the NT mounting space and are COMPLIANT (OK).
 
 2. IF NO TEMPLATE IS PRESENT (Bare wall):
    - Use the FTU (100 x 100 mm square) as your scale ruler:
      • Prohibited NT zone: First 125 mm (~1.25x FTU height) directly below the FTU base. Strictly NO cable clips/screws here.
      • Allowed cable securing zone: More than 125 mm below the FTU base (>1.25x FTU height). Cable clips/screws placed here are COMPLIANT (OK).
      • TOTAL 350 mm height measurement (CRITICAL): The 350 mm requirement is measured from the TOP of the FTU downwards. This means only ~250 mm (~2.5x FTU height) of clear space is needed BELOW the bottom edge of the FTU (NOT 350 mm below the bottom).
-     • Camera perspective: Account for foreshortening in photos taken from an angle or from above. Pipes, valves, or floor obstacles situated more than ~2.5x FTU height below the FTU base are OUTSIDE the 350 mm boundary and are COMPLIANT (OK).
+     • Camera perspective: Account for foreshortening in photos taken from an angle or from above. Obstacles situated more than ~2.5x FTU height below the FTU base are OUTSIDE the 350 mm boundary and are COMPLIANT (OK).
      • Width: 140 mm total width centered on the FTU (the FTU is 100 mm, NT is 110 mm).
 
 VERIFICATION CRITERIA (Internally assess all 6 items):
