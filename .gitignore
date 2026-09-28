@@ -1,0 +1,35 @@
+# Chaves e Segredos
+.env
+.env*.local
+!.env.example
+.streamlit/secrets.toml
+secrets.toml
+
+# Byte-compiled / cache Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Ambientes virtuais
+venv/
+.venv/
+env/
+
+# Ficheiros do desafio / datasets / documentos
+*.pdf
+*.PDF
+**/*.pdf
+**/*.PDF
+dataset/
+dataset
+**/dataset/
+images/
+*.zip
+*.crdownload
+
+# IDEs e SO
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
