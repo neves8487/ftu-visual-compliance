@@ -13,9 +13,22 @@ _PROMPT_PATH = Path(__file__).resolve().parent / "prompt_avaliacao.txt"
 PROMPT_AVALIACAO = _PROMPT_PATH.read_text(encoding="utf-8")
 
 
+def redimensionar_imagem(imagem: Image.Image, max_dim: int = 1080) -> Image.Image:
+    """
+    Redimensiona a imagem para caber numa resolução máxima (ex: 1080p),
+    mantendo o rácio de aspeto (aspect ratio) e máxima nitidez (LANCZOS).
+    Reduz drasticamente o tempo de upload e o consumo de tokens sem perder detalhes.
+    """
+    if max(imagem.size) > max_dim:
+        img_copia = imagem.copy()
+        img_copia.thumbnail((max_dim, max_dim), Image.Resampling.LANCZOS)
+        return img_copia
+    return imagem
+
+
 def avaliar_imagem(api_key: str, modelo: str, imagem: Image.Image) -> str:
     """
-    Envia a imagem com as regras pré-definidas diretamente no prompt para o Gemini.
+    Envia a imagem otimizada com as regras do prompt para o Gemini.
 
     Args:
         api_key (str): Chave de API do Google Gemini.
@@ -29,6 +42,9 @@ def avaliar_imagem(api_key: str, modelo: str, imagem: Image.Image) -> str:
         raise ValueError("A chave de API do Gemini não foi fornecida.")
 
     client = genai.Client(api_key=api_key.strip())
+
+     # Redimensiona para 1080p para acelerar upload e inferência
+    imagem_otimizada = redimensionar_imagem(imagem, max_dim=1080)
 
     resposta = client.models.generate_content(
         model=modelo,
