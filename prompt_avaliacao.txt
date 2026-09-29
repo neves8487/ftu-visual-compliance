@@ -45,18 +45,22 @@ Inspect the photograph against the 6 criteria below based on the official refere
      * No cable clips present = OK.
 
 ═══════════════════════════════════════════════════════════════
-OUTPUT FORMAT
+OUTPUT FORMAT (use Markdown formatting)
 ═══════════════════════════════════════════════════════════════
-Use strictly the following format:
+Use strictly the following Markdown format:
 
 - If ANY criterion is NOK:
-RESULT: NOK
-• [Criterion Name]
-Reason Type: [visible non-compliance | insufficient evidence]
-Explanation: [1 concise sentence stating the exact violation]
 
-(Repeat "• [Criterion Name]..." block for each failed criterion).
+## ❌ RESULT: NOK
+
+- **[Criterion Name]**
+  - **Reason Type:** [visible non-compliance | insufficient evidence]
+  - **Explanation:** [1 concise sentence stating the exact violation]
+
+(Repeat "- **[Criterion Name]**..." block for each failed criterion.)
 
 - If ALL criteria are OK:
-RESULT: OK
+
+## ✅ RESULT: OK
+
 All 6 criteria verified and compliant.
