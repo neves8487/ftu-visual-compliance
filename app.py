@@ -1,5 +1,6 @@
 import os
 import sys
+import time
 from pathlib import Path
 from PIL import Image
 import streamlit as st
@@ -51,12 +52,9 @@ with st.sidebar:
             help="Insira a sua chave de API do Google Gemini."
         )
 
-    modelo = st.selectbox(
-        "Modelo Multimodal",
-        options=["gemini-3.8-flash", "gemini-3.7-flash", "gemini-3.6-flash", "gemini-3.5-flash", "gemini-3.5-flash-lite"],
-        index=0
-    )
-    
+    MODELO = "gemini-3.8-flash"
+    st.info("🤖 **Modelo:** Google Gemini 3.8 Flash")
+
 
 # ==============================================================================
 # Upload de Imagens (múltiplas)
@@ -107,15 +105,24 @@ if botao_avaliar:
                 (idx) / total,
                 text=f"A avaliar {nome} ({idx + 1}/{total})..."
             )
+            inicio = time.perf_counter()
             try:
                 resultado = avaliar_imagem(
                     api_key=api_key.strip(),
-                    modelo=modelo,
+                    modelo=MODELO,
                     imagem=img
                 )
-                st.session_state["resultados"][nome] = resultado
+                duracao = time.perf_counter() - inicio
+                st.session_state["resultados"][nome] = {
+                    "texto": resultado,
+                    "tempo": duracao
+                }
             except Exception as e:
-                st.session_state["resultados"][nome] = f"❌ Erro: {e}"
+                duracao = time.perf_counter() - inicio
+                st.session_state["resultados"][nome] = {
+                    "texto": f"❌ Erro: {e}",
+                    "tempo": duracao
+                }
 
         barra_progresso.progress(1.0, text="Avaliação concluída!")
 
@@ -124,6 +131,15 @@ if st.session_state.get("resultados"):
     st.markdown("---")
     st.subheader("📋 Relatórios de Avaliação")
 
-    for nome, resultado in st.session_state["resultados"].items():
-        with st.expander(f"📄 {nome}", expanded=True):
-            st.markdown(resultado)
+    for nome, dados in st.session_state["resultados"].items():
+        if isinstance(dados, dict):
+            texto = dados.get("texto", "")
+            tempo = dados.get("tempo", 0.0)
+            titulo = f"📄 {nome} — ⏱️ {tempo:.2f}s"
+        else:
+            texto = str(dados)
+            titulo = f"📄 {nome}"
+
+        with st.expander(titulo, expanded=True):
+            st.markdown(texto)
+
