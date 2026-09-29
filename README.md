@@ -50,11 +50,11 @@ Avaliação completa do dataset oficial de 25 imagens:
 | **1.JPG** | ❌ **NOK** | Multiple FTUs visible | Two FTUs are visible side by side in the image. | 5.63s |
 | **2.JPG** | ❌ **NOK** | Free space around the FTU | Black router mounted directly above FTU encroaches on required clearance space. | 18.65s |
 | **3.JPG** | ❌ **NOK** | Free space around the FTU<br>Screw inside safe area | Horizontal cable duct crosses within 250 mm clearance below FTU.<br>Cable clip is mounted within 125 mm directly below FTU base. | 10.98s |
-| **4.JPG** | ❌ **NOK** | Screw inside safe area<br>*(Free space around the FTU)*-ERRADO | Cable clip installed less than 125 mm below FTU base.<br>*(Pipe encroaches within 20 mm lateral margin on right)* | 28.70s |
+| **4.JPG** | ❌ **NOK** | Screw inside safe area<br>*(Free space around the FTU-ERRADO)* | Cable clip installed less than 125 mm below FTU base.<br>*(Pipe encroaches within 20 mm lateral margin on right)* | 28.70s |
 | **5.JPG** | ❌ **NOK** | Screw inside safe area | Cable clip screw installed in prohibited zone directly below FTU. | 6.36s |
 | **6.jpeg**| ❌ **NOK** | Correct FTU orientation | FTU is mounted sideways with text oriented vertically. | 7.46s |
 | **7.jpeg**| ❌ **NOK** | FTU closed | Front protective cover is missing, exposing internal fiber tray. | 3.78s |
-| **8.JPG** | ❌ **NOK** | Free space around the FTU<br>*(Screw inside safe area)*-ERRADO | Pipes encroach within 20 mm lateral clearance zone of FTU.<br>*(Cable clip mounted within prohibited zone directly below FTU)* | 8.87s |
+| **8.JPG** | ❌ **NOK** | Free space around the FTU<br>*(Screw inside safe area-ERRADO)* | Pipes encroach within 20 mm lateral clearance zone of FTU.<br>*(Cable clip mounted within prohibited zone directly below FTU)* | 8.87s |
 | **9.JPG** | ❌ **NOK** | Free space around the FTU | Vertical conduit on left encroaches within 20 mm lateral margin. | 7.37s |
 | **10.JPG**| ❌ **NOK** | Free space around the FTU | Pipes on both sides encroach within 20 mm lateral clearance margin. | 5.71s |
 | **11.jpg**| ❌ **NOK** | Free space around the FTU | Grey conduit encroaches within 20 mm lateral clearance margin. | 6.21s |
