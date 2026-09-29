@@ -4,10 +4,9 @@ Responsável pela comunicação com a Google GenAI SDK.
 """
 
 from pathlib import Path
-
 from PIL import Image
 from google import genai
-
+from google.genai import types
 # Carrega o prompt de avaliação a partir do ficheiro de texto
 _PROMPT_PATH = Path(__file__).resolve().parent / "prompt_avaliacao.txt"
 PROMPT_AVALIACAO = _PROMPT_PATH.read_text(encoding="utf-8")
@@ -51,7 +50,10 @@ def avaliar_imagem(api_key: str, modelo: str, imagem: Image.Image) -> str:
 
     resposta = client.models.generate_content(
         model=modelo,
-        contents=[imagem_otimizada, prompt_atual]
+        contents=[imagem_otimizada, prompt_atual],
+        config=types.GenerateContentConfig(
+            temperature=0.0,
+        ),
     )
 
     return resposta.text

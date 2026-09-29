@@ -18,13 +18,13 @@ load_dotenv()
 # Configuração da Página
 # ==============================================================================
 st.set_page_config(
-    page_title="Avaliação de Imagens - Gemini",
+    page_title="FTU Install Evaluation",
     page_icon="🔍",
     layout="wide"
 )
 
-st.title("🔍 Avaliador de Imagens com Google Gemini")
-st.markdown("Carregue uma ou mais imagens para avaliação visual automática.")
+st.title("🔍 Avaliação de Instalação de FTU")
+st.markdown("Carregue uma ou mais imagens para avaliação visual.")
 
 # ==============================================================================
 # Barra Lateral: Configurações
@@ -56,6 +56,7 @@ with st.sidebar:
         options=["gemini-3.8-flash", "gemini-3.7-flash", "gemini-3.6-flash", "gemini-3.5-flash", "gemini-3.5-flash-lite"],
         index=0
     )
+    
 
 # ==============================================================================
 # Upload de Imagens (múltiplas)
