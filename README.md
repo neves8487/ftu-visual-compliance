@@ -2,7 +2,7 @@
 
 Solução de Inteligência Artificial Multimodal desenvolvida para o **Case Study de Prompt Engineering da Altice Labs**, com foco na inspeção e auditoria visual automatizada de instalações de **Fibre Termination Unit (FTU)** em ambientes operacionais de telecomunicações.
 
-🌐 **Demo Online em Produção(Caso esteja em baixo, aguardar uns segundos):** [ftu-visual-compliance.streamlit.app](https://ftu-visual-compliance.streamlit.app/)
+🌐 **Demo Online em Produção (Caso esteja em baixo, aguardar uns segundos. Também disponível em dispositivos móveis):** [ftu-visual-compliance.streamlit.app](https://ftu-visual-compliance.streamlit.app/)
 
 ---
 
@@ -20,7 +20,7 @@ Solução de Inteligência Artificial Multimodal desenvolvida para o **Case Stud
 
 ---
 
-## 🎯 Entregáveis Oficiais do Case Study (1 a 7)
+## 🎯 Entregáveis Pedidos no Case Study (1 a 7)
 
 ### 1. Final Prompt (Prompt Final de Inspeção)
 O prompt final encontra-se versionado e documentado em [`prompt_avaliacao.txt`](prompt_avaliacao.txt).
@@ -50,11 +50,11 @@ Avaliação completa do dataset oficial de 25 imagens:
 | **1.JPG** | ❌ **NOK** | Multiple FTUs visible | Two FTUs are visible side by side in the image. | 5.63s |
 | **2.JPG** | ❌ **NOK** | Free space around the FTU | Black router mounted directly above FTU encroaches on required clearance space. | 18.65s |
 | **3.JPG** | ❌ **NOK** | Free space around the FTU<br>Screw inside safe area | Horizontal cable duct crosses within 250 mm clearance below FTU.<br>Cable clip is mounted within 125 mm directly below FTU base. | 10.98s |
-| **4.JPG** | ❌ **NOK** | Screw inside safe area<br>*(Free space around the FTU)* | Cable clip installed less than 125 mm below FTU base.<br>*(Pipe encroaches within 20 mm lateral margin on right)* | 28.70s |
+| **4.JPG** | ❌ **NOK** | Screw inside safe area<br>*(Free space around the FTU)*-ERRADO | Cable clip installed less than 125 mm below FTU base.<br>*(Pipe encroaches within 20 mm lateral margin on right)* | 28.70s |
 | **5.JPG** | ❌ **NOK** | Screw inside safe area | Cable clip screw installed in prohibited zone directly below FTU. | 6.36s |
 | **6.jpeg**| ❌ **NOK** | Correct FTU orientation | FTU is mounted sideways with text oriented vertically. | 7.46s |
 | **7.jpeg**| ❌ **NOK** | FTU closed | Front protective cover is missing, exposing internal fiber tray. | 3.78s |
-| **8.JPG** | ❌ **NOK** | Free space around the FTU<br>*(Screw inside safe area)* | Pipes encroach within 20 mm lateral clearance zone of FTU.<br>*(Cable clip mounted within prohibited zone directly below FTU)* | 8.87s |
+| **8.JPG** | ❌ **NOK** | Free space around the FTU<br>*(Screw inside safe area)*-ERRADO | Pipes encroach within 20 mm lateral clearance zone of FTU.<br>*(Cable clip mounted within prohibited zone directly below FTU)* | 8.87s |
 | **9.JPG** | ❌ **NOK** | Free space around the FTU | Vertical conduit on left encroaches within 20 mm lateral margin. | 7.37s |
 | **10.JPG**| ❌ **NOK** | Free space around the FTU | Pipes on both sides encroach within 20 mm lateral clearance margin. | 5.71s |
 | **11.jpg**| ❌ **NOK** | Free space around the FTU | Grey conduit encroaches within 20 mm lateral clearance margin. | 6.21s |
@@ -79,7 +79,7 @@ Avaliação completa do dataset oficial de 25 imagens:
 
 - **Classificação Global (OK vs NOK): 25/25 (100%)** — Sucesso.
 - **Concordância Exata nos Critérios NOK: 13/15 (86.7%)** (ou **23/25 = 92%** considerando todo o dataset).
-- **Análise dos Casos Limítrofes (`4.JPG` e `8.JPG`):**
+- **Análise dos Casos no Limite (`4.JPG` e `8.JPG`):**
   - O modelo identificou corretamente que ambas as instalações eram **NOK** e acertou o defeito principal de cada uma.
   - No entanto, devido à ausência do autocolante e à presença de elevado "ruído visual" (cablagens desorganizadas, tubos de eletricidade e água no mesmo painel), o modelo adotou uma postura **hiper-conservadora**: na `4.JPG` sinalizou o cano lateral adjacente como violação de espaço livre, e na `8.JPG` calculou no limite a distância do parafuso como inferior a 125 mm.
   - **Conclusão Técnica:** Em contexto de auditoria técnica de qualidade, um modelo com viés conservador em instalações marginais e ruidosas é preferível a um modelo permissivo que deixe passar defeitos físicos.
@@ -103,8 +103,7 @@ O desenvolvimento seguiu a ordem:
 - **Iteração 2 (Otimização de Latência por Filtragem Negativa):** Reformulação do formato de saída para emitir explicações **exclusivamente para critérios NOK**. Se tudo estiver OK, o modelo retorna apenas uma linha padrão. Isso reduziu os tokens de geração e acelerou a resposta.
 - **Iteração 3 (Autoridade de autocolante - *Template vs Bare Wall*):** Introdução da distinção entre instalações com autocolante de papel e paredes nuas. A folha adesiva passou a ser tratada como autoridade geométrica máxima, eliminando tentativas de estimar milímetros em adesivos impressos.
 - **Iteração 4 (Correção da Distribuição Espacial e Zonas do NT):** Com base no diagrama técnico dimensional de 350 × 140 × 100 mm, esclareceu-se que a zona proibida para parafusos é estritamente os primeiros 125 mm abaixo da base do FTU (zona do NT), sendo a metade inferior do adesivo permitida.
-- **Iteração 5 (General Improvements):** 
-  - Para paredes nuas, instruiu-se o modelo a empilhar mentalmente a altura de uma caixa FTU (100 mm) como régua visual comparativa.
+- **Iteração 5 (General Improvements):** Para paredes nuas, instruiu-se o modelo a empilhar mentalmente a altura de uma caixa FTU (100 mm) como régua visual comparativa.
 - **Iteração 6 (Resizing):** Integração de redimensionamento da imagem para 1080p
 
 ---

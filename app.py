@@ -1,3 +1,5 @@
+#APP STREAMLIT PARA AVALIAÇÃO DE FTU INSTALLATIONS
+
 import os
 import sys
 import time
@@ -5,12 +7,10 @@ from pathlib import Path
 from PIL import Image
 import streamlit as st
 from dotenv import load_dotenv
-
-# Garante que imports locais funcionem sem erro
-sys.path.append(str(Path(__file__).resolve().parent))
-
-# Importação do serviço de IA
+# Importação do serviço de IA desenvolvido
 from gemini_service import avaliar_imagem
+# Garante que imports locais funcionem sem erro no streamlit
+sys.path.append(str(Path(__file__).resolve().parent))
 
 # Carrega variáveis do arquivo .env, se existir
 load_dotenv()
@@ -25,7 +25,7 @@ st.set_page_config(
 )
 
 st.title("🔍 Avaliação de Instalação de FTU")
-st.markdown("Carregue uma ou mais imagens para avaliação visual.")
+st.markdown("Carregue uma ou mais imagens para avaliação da instalação.")
 
 # ==============================================================================
 # Barra Lateral: Configurações

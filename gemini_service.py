@@ -45,7 +45,6 @@ def avaliar_imagem(api_key: str, modelo: str, imagem: Image.Image) -> str:
     # Redimensiona para 1080p para acelerar upload e inferência
     imagem_otimizada = redimensionar_imagem(imagem, max_dim=1080)
 
-    # Lê sempre a versão mais recente do ficheiro de prompt
     prompt_atual = _PROMPT_PATH.read_text(encoding="utf-8")
 
     resposta = client.models.generate_content(
