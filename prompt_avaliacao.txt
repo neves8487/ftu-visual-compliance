@@ -11,11 +11,10 @@ Inspect the photograph against the 6 criteria below based on the official refere
 
 1. FTU visible in the image
    - FTU body must be clearly visible and in frame (not severely cropped, blurred, or occluded).
-   - STOP RULE: If the FTU is severely cropped at the frame edge (e.g., only bottom rim visible), mark ONLY this item as NOK. Do NOT evaluate or fail "Free space around the FTU" or "FTU closed" as cascading errors.
+   - STOP RULE: If the FTU is severely cropped at the frame edge (only bottom rim visible), mark ONLY this item as NOK. Do NOT evaluate or fail "Free space around the FTU" or "FTU closed".
 
 2. Multiple FTUs visible
-   - Exactly one FTU must be present.
-   - If two or more FTUs are visible in the image, mark NOK.
+   - Exactly one FTU must be present. Mark NOK if two or more FTUs are visible.
 
 3. FTU closed
    - The front protective cover must be installed and properly closed.
@@ -27,27 +26,25 @@ Inspect the photograph against the 6 criteria below based on the official refere
    - STOP RULE: If FTU is rotated, mark ONLY this item NOK; do not fail free space purely due to rotation.
 
 5. Free space around the FTU
-   - Requires clearance volume around the FTU (20 mm lateral margin on each side, and ~250 mm clearance below the FTU base).
-   - Check ALL sides of the FTU:
-     * Adjacent objects: Mark NOK if bulky devices (e.g. black modems/routers), pipes, conduits, or walls are mounted immediately against or touching the FTU (less than 20 mm clearance).
-     * Clearance below: Mark NOK only if rigid obstacles (horizontal ducts, copper pipes) are closer than 250 mm (<2.5× FTU height) directly below the FTU base.
-     * Obstacles more than 2.5× FTU height below the base (>250 mm) are OUTSIDE the volume = COMPLIANT (OK).
-     * If a printed template/sticker is present: obstacles outside the printed template boundary are COMPLIANT (OK). Thin wires running flat on the wall are COMPLIANT (OK).
-     * Do NOT guess or fabricate violations. If clearance is ambiguous or outside 250 mm, it is OK.
+   - Requires 20 mm lateral margin on each side (only 0.2× FTU width) and ~250 mm clearance below the FTU base.
+   - Adjacent objects: Mark NOK if bulky devices (e.g. black modems/routers touching or right above FTU), conduits, or pipes encroach within the 20 mm lateral margin.
+   - Important: An adjacent electrical meter or panel separated by at least 20 mm (visible gap) is COMPLIANT (OK).
+   - Clearance below: Mark NOK only if rigid obstacles (horizontal ducts, copper pipes) are closer than 250 mm (<2.5× FTU height) directly below the base. Obstacles further down (>2.5× FTU height) are COMPLIANT (OK).
+   - If a template/sticker is present: obstacles outside the printed boundary are COMPLIANT (OK). Thin surface wires are COMPLIANT (OK).
+   - Do NOT guess or fabricate violations.
 
 6. Screw inside safe area
    - Evaluates ONLY screws/clips/brackets fixing the fiber cable below the FTU (ignore FTU wall-mounting screws).
-   - PROHIBITED ZONE: Only the first ~125 mm (~1.25× FTU height) directly below the FTU base (the reserved NT area, or the delineated text/QR box on printed templates).
+   - PROHIBITED ZONE: Only the first ~125 mm (~1.25× FTU height) directly below the FTU base.
    - ALLOWED ZONE: Any cable clip or screw placed MORE than 125 mm (>1.25× FTU height) below the FTU base, or placed below the printed NT box / at the bottom margin of the template sticker, is COMPLIANT (OK).
-   - STRICT RULE:
-     * Mark NOK ONLY if a cable clip/screw is installed inside the first 125 mm (<1.25× FTU height) directly below the FTU base.
-     * Clips located in the lower half/third of the template, near the bottom edge of the paper, or well below 1.25× FTU height are 100% OK.
-     * No cable clips present = OK.
+   - Bare wall (no template): Compare the distance from the FTU bottom to the cable clip against the 100 mm FTU height. If the clip is positioned further down than 1.25× FTU height (e.g. ~1.4×–1.5× FTU height down), it is OUTSIDE the prohibited zone and COMPLIANT (OK).
+   - Mark NOK ONLY if the cable clip is clearly located within the first 125 mm (<1.25× FTU height) directly beneath the base.
+   - No clips present = OK.
 
 ═══════════════════════════════════════════════════════════════
-OUTPUT FORMAT (use Markdown formatting)
+OUTPUT FORMAT (Clean, concise, no unnecessary filler)
 ═══════════════════════════════════════════════════════════════
-Use strictly the following Markdown format:
+Use strictly the following format:
 
 - If ANY criterion is NOK:
 
@@ -55,7 +52,7 @@ Use strictly the following Markdown format:
 
 - **[Criterion Name]**
   - **Reason Type:** [visible non-compliance | insufficient evidence]
-  - **Explanation:** [1 concise sentence stating the exact violation]
+  - **Explanation:** [1 short, direct sentence stating only the exact object/defect, max 12 words]
 
 (Repeat "- **[Criterion Name]**..." block for each failed criterion.)
 
