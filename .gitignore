@@ -1,35 +1,23 @@
-# Chaves e Segredos
+# Segredos e Configurações Locais
 .env
 .env*.local
 !.env.example
 .streamlit/secrets.toml
-secrets.toml
 
-# Byte-compiled / cache Python
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-
-# Ambientes virtuais
-venv/
-.venv/
-env/
-
-# Ficheiros do desafio / datasets / documentos
-*.pdf
-*.PDF
-**/*.pdf
-**/*.PDF
+# Dados Confidenciais do Desafio (Altice Labs NDA)
 dataset/
-dataset
-**/dataset/
 images/
+*.pdf
 *.zip
-*.crdownload
 
-# IDEs e SO
-.vscode/
-.idea/
+# Cache e Ambientes Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Sistema Operativo e IDEs
 .DS_Store
 Thumbs.db
+.vscode/
+.idea/
