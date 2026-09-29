@@ -2,43 +2,42 @@
 
 Solução de Inteligência Artificial Multimodal desenvolvida para o **Case Study de Prompt Engineering da Altice Labs**, com foco na inspeção e auditoria visual automatizada de instalações de **Fibre Termination Unit (FTU)** em ambientes operacionais de telecomunicações.
 
-🌐 **Demo Online em Produção:** [ftu-visual-compliance.streamlit.app](https://ftu-visual-compliance.streamlit.app/)
+🌐 **Demo Online em Produção(Caso esteja em baixo, aguardar uns segundos):** [ftu-visual-compliance.streamlit.app](https://ftu-visual-compliance.streamlit.app/)
 
 ---
 
-## 📊 Resumo Executivo de Desempenho
+## 📊 Resumo de Desempenho
 
-| Indicador | Resultado | Impacto Operacional / Negócio |
+| Indicador | Resultado | Impacto |
 | :--- | :---: | :--- |
-| **Acurácia Global (OK vs NOK)** | **100% (25/25)** | Triagem operacional fiável sem aprovação de defeitos |
-| **Acurácia por Critério (NOKs)** | **92% (23/25)** | Elevado rigor no diagnóstico granular das não-conformidades |
-| **Taxa de Falsos Negativos** | **0% (0/15)** | **Risco Crítico Eliminado:** Nenhuma instalação com anomalia é aprovada |
+| **Accuracy Global (OK vs NOK)** | **100% (25/25)** | Viável sem aprovação de defeitos |
+| **Accuracy por Critério (NOKs)** | **92% (23/25)** | Por vezes nas NOK com bastante "ruído visual" adiciona critérios a mais, mas não chumba nenhuma OK |
+| **Taxa de Falsos Negativos** | **0% (0/15)** | Nenhuma instalação com anomalia é aprovada |
 | **Taxa de Falsos Positivos** | **0% (0/10)** | Nenhuma instalação conforme foi rejeitada |
-| **Tempo Médio de Resposta** | **~8.58 s** | Mínimo: 3.16s \| Máximo: 28.70s (viável para validação em campo) |
-| **Custo por Imagem** | **~0,0052 €** | Meio cêntimo de euro (**~5,20 € por 1.000 auditorias**) |
-| **Modelo Multimodal** | `gemini-3.8-flash` | Equilíbrio ótimo entre acuidade geométrica espacial e latência |
+| **Tempo Médio de Resposta** | **8s** | Mínimo: 3.16s \| Máximo: 28.70s dependendo da quantidade de ruído da imagem (outros dispositivos, tubos, etc.)|
+| **Custo por Imagem** | **~0,0052 €** | Meio cêntimo de euro |
+| **Modelo Multimodal** | `gemini-3.8-flash` | Equilíbrio ótimo entre capacidades de raciocínio espacial e latência |
 
 ---
 
 ## 🎯 Entregáveis Oficiais do Case Study (1 a 7)
 
 ### 1. Final Prompt (Prompt Final de Inspeção)
-O prompt final de produção encontra-se versionado e documentado em [`prompt_avaliacao.txt`](prompt_avaliacao.txt).
+O prompt final encontra-se versionado e documentado em [`prompt_avaliacao.txt`](prompt_avaliacao.txt).
 
 Principais características técnicas da engenharia do prompt:
 - **Âncora de Escala Relativa (100 × 100 mm):** Usa as dimensões físicas conhecidas do corpo do FTU como régua proporcional de referência geométrica para o modelo inferir profundidade e distâncias no espaço 3D da foto.
-- **Hierarquia de Autoridade (Template vs. Parede Nua):** Quando existe o gabarito/autocolante impresso (*wall sticker*), as suas linhas de demarcação têm autoridade máxima. Em paredes nuas (*bare wall*), é ativado o teste visual de empilhamento vertical de caixas FTU.
-- **Prevenção de Erros em Cascata (*Stop Rules*):** Regras de corte explícitas que impedem o modelo de falhar critérios secundários por arrasto (ex.: se o FTU estiver cortado na margem da foto, apenas o enquadramento é chumbado).
-- **Formato Conciso (Menos "Palha"):** Explicações técnicas estritas de no máximo 12 palavras, reduzindo drasticamente o consumo de tokens de saída e a latência de inferência.
+- **Hierarquia de Autoridade (Template vs. Parede Nua):** Quando existe o autocolante impresso, as suas linhas de demarcação têm autoridade máxima. Em paredes nuas, é ativado o teste visual onde é usada a FTU como escala para medições e limites.
+- **Explicação Eficiente:** Explicações técnicas estritas de no máximo 12 palavras, reduzindo o consumo de tokens de saída e a latência de inferência.
 
 ---
 
 ### 2. Models and Configurations Used (Modelos e Configurações)
-Para garantir **100% de reprodutibilidade científica e operacional dos resultados**:
+Sobre o modelo usado
 - **Modelo:** `Google Gemini 3.8 Flash` (`gemini-3.8-flash`).
-- **SDK / API:** Novo `google-genai` SDK oficial para Python.
-- **Hiperparâmetro de Temperatura:** `temperature=0.0` no `GenerateContentConfig`, garantindo determinismo absoluto, respostas consistentes e eliminação de alucinações criativas.
-- **Otimização e Pré-processamento de Imagem:** Redimensionamento inteligente preservando o rácio de aspeto para resolução máxima de 1080p (`max_dim=1080`) com interpolação `Image.Resampling.LANCZOS` (em [`gemini_service.py`](gemini_service.py)), reduzindo os tempos de transferência de rede e limitando os tokens visuais consumidos a ~300–600 tokens por fotografia.
+- **SDK / API:** `google-genai` SDK oficial para Python.
+- **Temperatura:** `temperature=0.0` no `GenerateContentConfig`, garantindo respostas consistentes e eliminação de alucinações.
+- **Otimização e Pré-processamento de Imagem:** Redimensionamento preservando o rácio de aspeto para resolução máxima de 1080p (`max_dim=1080`) com interpolação `Image.Resampling.LANCZOS` (em [`gemini_service.py`](gemini_service.py)), reduzindo os tempos de transferência de rede e limitando os tokens visuais consumidos.
 
 ---
 
@@ -78,52 +77,42 @@ Avaliação completa do dataset oficial de 25 imagens:
 
 ### 4. Evaluation Summary & Error Analysis (Resumo e Discussão Técnica)
 
-- **Classificação Global (OK vs NOK): 25/25 (100%)** — Sucesso absoluto na triagem primária.
+- **Classificação Global (OK vs NOK): 25/25 (100%)** — Sucesso.
 - **Concordância Exata nos Critérios NOK: 13/15 (86.7%)** (ou **23/25 = 92%** considerando todo o dataset).
-- **Assimetria de Risco em Operações de Telecomunicações:**
-  - **Falsos Negativos (0%):** Nenhuma instalação defeituosa foi dada como válida. Isto evita falhas pós-instalação, quebras de SLA e novos deslocamentos de carrinhas de piquete (*truck rolls*), que acarretam custos severos.
-  - **Falsos Positivos (0% no lote OK):** Nenhuma instalação conforme foi rejeitada indevidamente.
 - **Análise dos Casos Limítrofes (`4.JPG` e `8.JPG`):**
   - O modelo identificou corretamente que ambas as instalações eram **NOK** e acertou o defeito principal de cada uma.
-  - No entanto, devido à ausência do autocolante de gabarito e à presença de elevado "ruído visual" (cablagens desorganizadas, tubos de eletricidade e água no mesmo painel), o modelo adotou uma postura **hiper-conservadora**: na `4.JPG` sinalizou o cano lateral adjacente como violação de espaço livre, e na `8.JPG` calculou no limite a distância do parafuso como inferior a 125 mm.
+  - No entanto, devido à ausência do autocolante e à presença de elevado "ruído visual" (cablagens desorganizadas, tubos de eletricidade e água no mesmo painel), o modelo adotou uma postura **hiper-conservadora**: na `4.JPG` sinalizou o cano lateral adjacente como violação de espaço livre, e na `8.JPG` calculou no limite a distância do parafuso como inferior a 125 mm.
   - **Conclusão Técnica:** Em contexto de auditoria técnica de qualidade, um modelo com viés conservador em instalações marginais e ruidosas é preferível a um modelo permissivo que deixe passar defeitos físicos.
 
 ---
 
 ### 5. Response-Time Measurements (Medições de Latência)
 
-- **Tempo Total para Avaliar o Dataset (25 imagens):** **214.38 segundos** (~3.5 minutos).
-- **Tempo Médio por Imagem:** **8.58 segundos**.
+- **Tempo Total para Avaliar o Dataset (25 imagens):** ~3.5 minutos.
+- **Tempo Médio por Imagem:** **8 segundos**.
 - **Imagem Mais Rápida:** `12.jpeg` (**3.16s**).
 - **Imagem Mais Lenta:** `4.JPG` (**28.70s**).
-
-#### 🔍 Correlação entre Complexidade da Cena, Enquadramento e Latência:
-Observou-se uma correlação direta entre o plano fotográfico e o tempo de resposta da inferência multimodal:
-1. **Fotografias em Plano Fechado / Focadas no FTU (`7.jpeg`, `12.jpeg`, `14.jpeg`, `101.JPG`):** Latência rápida de **3 a 4 segundos**.
-2. **Fotografias em Plano Aberto com Elevada Densidade de Objetos (`2.JPG`, `4.JPG`, `102.JPG`):** Latência superior (**18 a 28 segundos**), explicada pelo custo computacional das camadas de atenção do Transformer ao varrer e correlacionar dezenas de elementos visuais dispersos (quadros de contadores, canos paralelos, cabos emaranhados).
-3. **Recomendação para a Solução Final:** Adicionar uma máscara / guia de enquadramento reticular na app móvel do técnico que force uma fotografia a ~0.8m centrada no FTU, estabilizando os tempos de resposta abaixo de 5 segundos.
 
 ---
 
 ### 6. Approach and Iterations (Abordagem e Engenharia de Prompt)
 
-O desenvolvimento seguiu uma metodologia iterativa orientada a dados (*data-driven prompt engineering*):
+O desenvolvimento seguiu a ordem:
 
-- **Iteração 1 (Estrutura e Parsing):** Saída inicial em JSON com análise explícita de todos os 6 critérios. Identificou-se que gerar explicações extensas para critérios conformes causava latência desnecessária.
-- **Iteração 2 (Otimização de Latência por Filtragem Negativa):** Reformulação do formato de saída para emitir explicações **exclusivamente para critérios NOK**. Se tudo estiver OK, o modelo retorna apenas uma linha padrão. Isso reduziu os tokens de geração em ~60% e acelerou a resposta.
-- **Iteração 3 (Autoridade de Gabarito - *Template vs Bare Wall*):** Introdução da distinção entre instalações com autocolante de papel e paredes nuas. A folha adesiva passou a ser tratada como autoridade geométrica máxima, eliminando tentativas de estimar milímetros em adesivos impressos.
-- **Iteração 4 (Correção da Distribuição Espacial e Zonas do NT):** Com base no diagrama técnico dimensional de 350 × 140 × 100 mm, esclareceu-se que a zona proibida para parafusos é estritamente os primeiros 125 mm abaixo da base do FTU (zona do NT), sendo a metade inferior do adesivo permitida. Isso eliminou falsos positivos nas fotos `101`, `104` e `106`.
-- **Iteração 5 (Stop Rules e Teste de Empilhamento Visual):** 
-  - Adicionadas regras de paragem estritas (*Stop Rules*) para evitar cascatas em imagens com corte severo (`12.jpeg`) ou rotação de 90°.
-  - Para paredes nuas (`8.JPG`), instruiu-se o modelo a empilhar mentalmente a altura de uma caixa FTU (100 mm) como régua visual comparativa.
-- **Iteração 6 (Pipeline Otimizado LANCZOS 1080p):** Integração de redimensionamento dinâmico na leitura da imagem, reduzindo o tráfego de rede e garantindo conformidade com a taxa de transferência da API.
+- **Iteração 1 (Estrutura e Parsing):** Saída com análise explícita de todos os 6 critérios. Identificou-se que gerar explicações extensas para critérios conformes causava latência desnecessária.
+- **Iteração 2 (Otimização de Latência por Filtragem Negativa):** Reformulação do formato de saída para emitir explicações **exclusivamente para critérios NOK**. Se tudo estiver OK, o modelo retorna apenas uma linha padrão. Isso reduziu os tokens de geração e acelerou a resposta.
+- **Iteração 3 (Autoridade de autocolante - *Template vs Bare Wall*):** Introdução da distinção entre instalações com autocolante de papel e paredes nuas. A folha adesiva passou a ser tratada como autoridade geométrica máxima, eliminando tentativas de estimar milímetros em adesivos impressos.
+- **Iteração 4 (Correção da Distribuição Espacial e Zonas do NT):** Com base no diagrama técnico dimensional de 350 × 140 × 100 mm, esclareceu-se que a zona proibida para parafusos é estritamente os primeiros 125 mm abaixo da base do FTU (zona do NT), sendo a metade inferior do adesivo permitida.
+- **Iteração 5 (General Improvements):** 
+  - Para paredes nuas, instruiu-se o modelo a empilhar mentalmente a altura de uma caixa FTU (100 mm) como régua visual comparativa.
+- **Iteração 6 (Resizing):** Integração de redimensionamento da imagem para 1080p
 
 ---
 
 ### 7. Minimal Script & Execution Instructions (Como Reproduzir)
 
 #### Opção A: Aceder à Aplicação na Nuvem (Sem Instalação)
-Aceda diretamente a [ftu-visual-compliance.streamlit.app](https://ftu-visual-compliance.streamlit.app/), insira a sua `GEMINI_API_KEY` na barra lateral e carregue as imagens para inspecionar.
+Aceda diretamente a [ftu-visual-compliance.streamlit.app](https://ftu-visual-compliance.streamlit.app/) e carregue as imagens para inspecionar.
 
 #### Opção B: Executar Localmente em 3 Passos
 
