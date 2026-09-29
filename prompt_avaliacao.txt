@@ -29,14 +29,18 @@ Inspect the photograph against the 6 criteria below based on the official refere
    - Requires 20 mm lateral margin on each side (only 0.2× FTU width) and ~250 mm clearance below the FTU base.
    - Adjacent objects: Mark NOK if bulky devices (e.g. black modems/routers touching or right above FTU), conduits, or pipes encroach within the 20 mm lateral margin.
    - Important: An adjacent electrical meter or panel separated by at least 20 mm (visible gap) is COMPLIANT (OK).
-   - Clearance below: Mark NOK only if rigid obstacles (horizontal ducts, copper pipes) are closer than 250 mm (<2.5× FTU height) directly below the base. Obstacles further down (>2.5× FTU height) are COMPLIANT (OK).
+   - Clearance below: The required clearance space extends ONLY ~250 mm (~2.5× FTU height) below the FTU base. Pipes or conduits crossing further down near the bottom (>2.5× FTU height, such as horizontal pipes running near the floor/bottom) are OUTSIDE the clearance volume and COMPLIANT (OK). Mark NOK only if an obstacle clearly crosses within the first 250 mm directly under the FTU base.
    - If a template/sticker is present: obstacles outside the printed boundary are COMPLIANT (OK). Thin surface wires are COMPLIANT (OK).
    - Do NOT guess or fabricate violations.
 
 6. Screw inside safe area
    - Evaluates ONLY screws/clips/brackets fixing the fiber cable below the FTU (ignore FTU wall-mounting screws).
    - PROHIBITED ZONE: Only the first ~125 mm (~1.25× FTU height) directly below the FTU base.
-   - ALLOWED ZONE: Any cable clip or screw placed MORE than 125 mm (>1.25× FTU height) below the FTU base, or placed below the printed NT box / at the bottom margin of the template sticker, is COMPLIANT (OK).
+   - ALLOWED ZONE: Any cable clip or screw placed MORE than 125 mm (>1.25× FTU height) below the FTU base is COMPLIANT (OK).
+   - IF A TEMPLATE / PAPER STICKER IS PRESENT:
+     * The paper sheet covers the full 350 mm height. The prohibited NT zone is ONLY the upper portion right under the FTU with instructional text.
+     * Any clip fastened in the lower half of the template paper, near the bottom logo ('Glaspoort' / 'KPN') or near the bottom edge of the paper, is well beyond 125 mm and COMPLIANT (OK).
+     * Mark NOK ONLY if the clip is inside the upper text/QR area immediately below the FTU base.
    - Bare wall (no template): Compare the distance from the FTU bottom to the cable clip against the 100 mm FTU height. If the clip is positioned further down than 1.25× FTU height (e.g. ~1.4×–1.5× FTU height down), it is OUTSIDE the prohibited zone and COMPLIANT (OK).
    - Mark NOK ONLY if the cable clip is clearly located within the first 125 mm (<1.25× FTU height) directly beneath the base.
    - No clips present = OK.
