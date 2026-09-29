@@ -41,8 +41,9 @@ Inspect the photograph against the 6 criteria below based on the official refere
      * The paper sheet covers the full 350 mm height. The prohibited NT zone is ONLY the upper portion right under the FTU with instructional text.
      * Any clip fastened in the lower half of the template paper, near the bottom logo ('Glaspoort' / 'KPN') or near the bottom edge of the paper, is well beyond 125 mm and COMPLIANT (OK).
      * Mark NOK ONLY if the clip is inside the upper text/QR area immediately below the FTU base.
-   - Bare wall (no template): Compare the distance from the FTU bottom to the cable clip against the 100 mm FTU height. If the clip is positioned further down than 1.25× FTU height (e.g. ~1.4×–1.5× FTU height down), it is OUTSIDE the prohibited zone and COMPLIANT (OK).
-   - Mark NOK ONLY if the cable clip is clearly located within the first 125 mm (<1.25× FTU height) directly beneath the base.
+   - Bare wall visual test (no template): Mentally stack one full FTU box height directly underneath the installed FTU base.
+     * If the cable clip is positioned below that imaginary stacked box (with clear empty space between the FTU base and the clip, e.g. ~1.4×–1.5× FTU height down), it is in the ALLOWED zone and COMPLIANT (OK).
+     * Mark NOK ONLY if the clip is placed inside that first box height or tightly under the base (<1.25× FTU, such as clips mounted within half a box height of the base).
    - No clips present = OK.
 
 ═══════════════════════════════════════════════════════════════
