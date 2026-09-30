@@ -33,8 +33,7 @@ Inspect the photograph against the 6 criteria below based on the official refere
 - Important: An adjacent electrical meter or panel separated by at least 20 mm (visible gap) is COMPLIANT (OK).
 - Clearance below: The required clearance space extends ONLY ~250 mm (~2.5× FTU height) below the FTU base. Pipes or conduits crossing further down near the bottom (>2.5× FTU height, such as horizontal pipes running near the floor/bottom) are OUTSIDE the clearance volume and COMPLIANT (OK). Mark NOK only if an obstacle clearly crosses within the first 250 mm directly under the FTU base.
 - If a template/sticker is present: obstacles outside the printed boundary are COMPLIANT (OK). Thin surface wires are COMPLIANT (OK).
-- Insufficient visual evidence: If the bottom of the photo cuts off tightly below the FTU base (less than ~1.5× FTU height visible beneath it, cutting off the NT installation area), mark NOK with Reason Type 'insufficient evidence' and Explanation: 'Installation space below FTU is cut off by photo frame.'
-- Bare wall / visible areas: When the space below the FTU is visible in frame (>2× FTU height visible below), visual evidence is sufficient—use mental measurements normally. Do NOT guess or fabricate violations.
+- Do NOT guess or fabricate violations.
 
 ### 6. Screw inside safe area
 - Evaluates ONLY screws/clips/brackets fixing the fiber cable below the FTU (ignore FTU wall-mounting screws).
